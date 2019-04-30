@@ -9,7 +9,14 @@ pipeline {
         }
         stage('Build') {
             steps {
-                echo 'Building...'
+                //echo 'Building...'
+                bat 'mvn clean package'
+            }
+            post {
+            	success {
+            		echo 'Now archiving'
+            		ArchiverArtifacts artifacts '**/target/*.War'
+            	}
             }
         }
        stage('Deploy') {
